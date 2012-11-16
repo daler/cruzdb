@@ -336,8 +336,10 @@ class ABase(object):
         assert all(p >=0 or p is None for p in local_ps), (local_ps)
         return local_ps[0] if len(positions) == 1 else local_ps
 
+
 class Feature(ABase):
     name = Column(String, unique=True, primary_key=True)
+
 
 class chromInfo(ABase):
     def __repr__(self):
@@ -345,8 +347,29 @@ class chromInfo(ABase):
 
     __str__ = __repr__
 
+
 class kgXref(ABase):
     kgID = Column(String, unique=True, primary_key=True)
 
     def __repr__(self):
         return "%s(%s)" % (self.__tablename__, self.kgID)
+
+    __str__ = __repr__
+
+
+class flyBase2004Xref(ABase):
+    name = Column(String, unique=True, primary_key=True)
+
+    def __repr__(self):
+        return "%s(%s/%s)" % (self.__tablename__, self.name, self.symbol)
+
+    __str__ = __repr__
+
+class flyBaseCanonical(ABase):
+    transcript = Column(String, unique=True, primary_key=True)
+
+    def __repr__(self):
+        return "%s(%s, %s:%s-%s)" % (self.__tablename__, self.transcript,
+                                     self.chrom, self.chromStart, self.chromEnd)
+
+    __str__ = __repr__
